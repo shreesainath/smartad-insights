@@ -8,7 +8,9 @@ interface CampaignData {
   productType: string;
   campaignGoal: string;
   budget: string;
-  platform: string;
+  location: string;
+  ageRange: string;
+  gender: string;
 }
 
 export function AdWiseDashboard() {

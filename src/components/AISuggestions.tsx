@@ -6,7 +6,9 @@ interface CampaignData {
   productType: string;
   campaignGoal: string;
   budget: string;
-  platform: string;
+  location: string;
+  ageRange: string;
+  gender: string;
 }
 
 interface AISuggestionsProps {
@@ -26,89 +28,149 @@ export function AISuggestions({ campaignData }: AISuggestionsProps) {
   };
 
   const getLocationSuggestions = () => {
-    const baseLocations = ["United States", "Canada", "United Kingdom", "Australia"];
+    const selectedLocation = campaignData.location;
+    
+    if (selectedLocation === 'united-states') {
+      return ["Major US Cities", "Suburban Areas", "Tech Hubs", "California", "New York", "Texas"];
+    }
+    if (selectedLocation === 'global') {
+      return ["North America", "Europe", "Asia-Pacific", "English-speaking Countries"];
+    }
+    if (selectedLocation === 'canada') {
+      return ["Toronto", "Vancouver", "Montreal", "Major Canadian Cities"];
+    }
+    if (selectedLocation === 'united-kingdom') {
+      return ["London", "Manchester", "Birmingham", "Scotland", "Wales"];
+    }
+    
+    // Default suggestions based on product type
     if (campaignData.productType.toLowerCase().includes('baby')) {
-      return ["Suburban Areas", "Family-dense Cities", "High-income Zip Codes", ...baseLocations];
+      return ["Family-dense Areas", "Suburban Neighborhoods", "High-income Regions"];
     }
     if (campaignData.productType.toLowerCase().includes('saas')) {
-      return ["Tech Hubs", "Business Districts", "Major Cities", "San Francisco Bay Area"];
+      return ["Business Districts", "Tech Cities", "Metropolitan Areas"];
     }
-    return baseLocations;
+    
+    return ["Urban Areas", "Suburban Areas", "Metropolitan Regions"];
   };
 
   const getAudienceSuggestions = () => {
-    const baseAudience = [
-      { filter: "Age Range", value: "25-45", color: "bg-primary" },
-      { filter: "Income Level", value: "Middle to High", color: "bg-success" }
-    ];
-
+    const ageRange = campaignData.ageRange;
+    const gender = campaignData.gender;
+    
+    const suggestions = [];
+    
+    // Age-based suggestions
+    if (ageRange) {
+      suggestions.push({ filter: "Age Range", value: ageRange.replace('-', ' - '), color: "bg-primary" });
+    }
+    
+    // Gender-based suggestions  
+    if (gender && gender !== 'all') {
+      suggestions.push({ filter: "Gender", value: gender.charAt(0).toUpperCase() + gender.slice(1), color: "bg-action" });
+    }
+    
+    // Product-based suggestions
     if (campaignData.productType.toLowerCase().includes('baby')) {
-      return [
-        { filter: "Parental Status", value: "New Parents", color: "bg-action" },
-        { filter: "Age Range", value: "25-40", color: "bg-primary" },
-        { filter: "Interests", value: "Baby Products, Parenting", color: "bg-success" },
-        { filter: "Income Level", value: "Middle to High", color: "bg-success" }
-      ];
+      suggestions.push(
+        { filter: "Parental Status", value: "New Parents", color: "bg-success" },
+        { filter: "Interests", value: "Baby Products, Parenting", color: "bg-success" }
+      );
+    } else if (campaignData.productType.toLowerCase().includes('fitness')) {
+      suggestions.push(
+        { filter: "Interests", value: "Fitness, Health", color: "bg-success" },
+        { filter: "Behavior", value: "Active Lifestyle", color: "bg-action" }
+      );
+    } else if (campaignData.productType.toLowerCase().includes('saas')) {
+      suggestions.push(
+        { filter: "Job Title", value: "Decision Makers", color: "bg-success" },
+        { filter: "Company Size", value: "10-500 Employees", color: "bg-action" }
+      );
     }
-
-    if (campaignData.productType.toLowerCase().includes('fitness')) {
-      return [
-        { filter: "Interests", value: "Fitness, Health", color: "bg-action" },
-        { filter: "Age Range", value: "20-50", color: "bg-primary" },
-        { filter: "Behavior", value: "Active Lifestyle", color: "bg-success" }
-      ];
+    
+    // Income level based on age
+    if (ageRange === '25-34' || ageRange === '35-44') {
+      suggestions.push({ filter: "Income Level", value: "Middle to High", color: "bg-primary" });
     }
-
-    return baseAudience;
+    
+    return suggestions;
   };
 
   const getCreativeSuggestions = () => {
     const goal = campaignData.campaignGoal;
-    const platform = campaignData.platform;
-
     const suggestions = [];
 
+    // Goal-based creative suggestions
     if (goal === 'awareness') {
-      suggestions.push("Use bright, eye-catching visuals with your brand colors");
-      suggestions.push("Include your logo prominently in the creative");
-      suggestions.push("Focus on brand storytelling rather than direct sales");
+      suggestions.push("🎨 Use bright, eye-catching visuals with your brand colors");
+      suggestions.push("📱 Include your logo prominently in the creative");
+      suggestions.push("📖 Focus on brand storytelling rather than direct sales");
     } else if (goal === 'sales') {
-      suggestions.push("Show the product in action with real customers");
-      suggestions.push("Include clear pricing and promotional offers");
-      suggestions.push("Use action-oriented language like 'Shop Now' or 'Limited Time'");
+      suggestions.push("🛍️ Show the product in action with real customers");
+      suggestions.push("💰 Include clear pricing and promotional offers");
+      suggestions.push("⚡ Use action-oriented language like 'Shop Now' or 'Limited Time'");
+    } else if (goal === 'leads') {
+      suggestions.push("📋 Highlight lead magnets like free trials or downloads");
+      suggestions.push("🎯 Use benefit-focused headlines and clear CTAs");
+      suggestions.push("✨ Show value proposition immediately");
     }
 
-    if (platform === 'meta') {
-      suggestions.push("Video content performs 48% better on Meta platforms");
-      suggestions.push("Use square (1:1) or vertical (4:5) aspect ratios");
-    } else if (platform === 'google') {
-      suggestions.push("Responsive search ads with 3+ headlines work best");
-      suggestions.push("Include location extensions if you have physical stores");
+    // Age-based creative suggestions
+    if (campaignData.ageRange === '18-24') {
+      suggestions.push("📱 Use trendy, mobile-first video content");
+      suggestions.push("🌈 Incorporate current social media aesthetics");
+    } else if (campaignData.ageRange === '45-54' || campaignData.ageRange === '55-64') {
+      suggestions.push("📰 Use clear, professional imagery with readable text");
+      suggestions.push("🔍 Focus on detailed product information and benefits");
     }
+
+    // Gender-specific suggestions
+    if (campaignData.gender === 'male') {
+      suggestions.push("🏆 Use achievement and competition themes");
+    } else if (campaignData.gender === 'female') {
+      suggestions.push("👥 Include community and relationship elements");
+    }
+
+    // Multi-platform suggestions
+    suggestions.push("📹 Video content performs 48% better across all platforms");
+    suggestions.push("📐 Use square (1:1) or vertical (4:5) aspect ratios for mobile");
+    suggestions.push("🔄 Test multiple ad variations for optimal performance");
 
     return suggestions;
   };
 
   const getBudgetSuggestions = () => {
     const budget = campaignData.budget;
-    const platform = campaignData.platform;
-
+    const location = campaignData.location;
     const suggestions = [];
 
+    // Budget-based suggestions
     if (budget === '500-1000') {
-      suggestions.push("Focus on 1-2 core audience segments initially");
-      suggestions.push("Start with broad targeting to gather data");
-      suggestions.push("Allocate 70% to prospecting, 30% to retargeting");
+      suggestions.push("💡 Focus on 1-2 core audience segments initially");
+      suggestions.push("📊 Start with broad targeting to gather data");
+      suggestions.push("📈 Allocate 70% to prospecting, 30% to retargeting");
     } else if (budget === '5000-10000' || budget === '10000+') {
-      suggestions.push("Test multiple audience segments simultaneously");
-      suggestions.push("Implement advanced bidding strategies");
-      suggestions.push("Allocate 40% prospecting, 60% optimization and retargeting");
+      suggestions.push("🎯 Test multiple audience segments simultaneously");
+      suggestions.push("🤖 Implement advanced automated bidding strategies");
+      suggestions.push("⚖️ Allocate 40% prospecting, 60% optimization and retargeting");
+    } else {
+      suggestions.push("🚀 Balance between testing and scaling proven audiences");
+      suggestions.push("📱 Focus on mobile-first targeting for better ROI");
     }
 
-    if (platform === 'both') {
-      suggestions.push("Split 60% Google Ads, 40% Meta Ads for most verticals");
-      suggestions.push("Use unified tracking to compare platform performance");
+    // Location-based budget suggestions
+    if (location === 'united-states') {
+      suggestions.push("💰 US markets typically require 20-30% higher budgets");
+      suggestions.push("🏙️ Consider geo-targeting expensive metros vs suburban areas");
+    } else if (location === 'global') {
+      suggestions.push("🌍 Start with English-speaking markets before expanding");
+      suggestions.push("⏰ Adjust bidding schedules for different time zones");
     }
+
+    // Platform distribution suggestions
+    suggestions.push("📊 Split budget: 60% Google Ads, 40% Meta Ads for most verticals");
+    suggestions.push("📈 Use unified tracking to compare platform performance");
+    suggestions.push("🔄 Reallocate budget weekly based on performance data");
 
     return suggestions;
   };
@@ -126,7 +188,7 @@ export function AISuggestions({ campaignData }: AISuggestionsProps) {
           </h2>
         </div>
         <p className="text-muted-foreground">
-          Optimized suggestions for your {campaignData.productType} campaign
+          🤖 Optimized AI suggestions for your {campaignData.productType} campaign targeting {campaignData.location} audience
         </p>
       </div>
 

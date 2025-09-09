@@ -10,7 +10,9 @@ interface CampaignData {
   productType: string;
   campaignGoal: string;
   budget: string;
-  platform: string;
+  location: string;
+  ageRange: string;
+  gender: string;
 }
 
 interface CampaignFormProps {
@@ -22,12 +24,14 @@ export function CampaignForm({ onSubmit }: CampaignFormProps) {
     productType: "",
     campaignGoal: "",
     budget: "",
-    platform: ""
+    location: "",
+    ageRange: "",
+    gender: ""
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.productType && formData.campaignGoal && formData.budget && formData.platform) {
+    if (formData.productType && formData.campaignGoal && formData.budget && formData.location && formData.ageRange && formData.gender) {
       onSubmit(formData);
     }
   };
@@ -78,10 +82,10 @@ export function CampaignForm({ onSubmit }: CampaignFormProps) {
               Campaign Goal
             </Label>
             <Select value={formData.campaignGoal} onValueChange={(value) => updateField('campaignGoal', value)}>
-              <SelectTrigger className="transition-smooth focus:shadow-primary">
+              <SelectTrigger className="w-full transition-smooth focus:shadow-primary bg-background">
                 <SelectValue placeholder="Select your primary goal" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-background border shadow-elevated z-50">
                 <SelectItem value="awareness">Brand Awareness</SelectItem>
                 <SelectItem value="traffic">Drive Website Traffic</SelectItem>
                 <SelectItem value="leads">Generate Leads</SelectItem>
@@ -99,10 +103,10 @@ export function CampaignForm({ onSubmit }: CampaignFormProps) {
               Monthly Budget
             </Label>
             <Select value={formData.budget} onValueChange={(value) => updateField('budget', value)}>
-              <SelectTrigger className="transition-smooth focus:shadow-primary">
+              <SelectTrigger className="w-full transition-smooth focus:shadow-primary bg-background">
                 <SelectValue placeholder="Select budget range" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-background border shadow-elevated z-50">
                 <SelectItem value="500-1000">$500 - $1,000</SelectItem>
                 <SelectItem value="1000-2500">$1,000 - $2,500</SelectItem>
                 <SelectItem value="2500-5000">$2,500 - $5,000</SelectItem>
@@ -112,22 +116,66 @@ export function CampaignForm({ onSubmit }: CampaignFormProps) {
             </Select>
           </div>
 
-          {/* Platform */}
+          {/* Location */}
           <div className="space-y-3">
             <Label className="flex items-center gap-2">
               <Target className="h-4 w-4 text-muted-foreground" />
-              Preferred Platform
+              Target Location
             </Label>
-            <Select value={formData.platform} onValueChange={(value) => updateField('platform', value)}>
-              <SelectTrigger className="transition-smooth focus:shadow-primary">
-                <SelectValue placeholder="Choose advertising platform" />
+            <Select value={formData.location} onValueChange={(value) => updateField('location', value)}>
+              <SelectTrigger className="w-full transition-smooth focus:shadow-primary bg-background">
+                <SelectValue placeholder="Select target location" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="google">Google Ads</SelectItem>
-                <SelectItem value="meta">Meta Ads (Facebook & Instagram)</SelectItem>
-                <SelectItem value="both">Both Platforms</SelectItem>
-                <SelectItem value="linkedin">LinkedIn Ads</SelectItem>
-                <SelectItem value="tiktok">TikTok Ads</SelectItem>
+              <SelectContent className="bg-background border shadow-elevated z-50">
+                <SelectItem value="united-states">United States</SelectItem>
+                <SelectItem value="canada">Canada</SelectItem>
+                <SelectItem value="united-kingdom">United Kingdom</SelectItem>
+                <SelectItem value="australia">Australia</SelectItem>
+                <SelectItem value="germany">Germany</SelectItem>
+                <SelectItem value="france">France</SelectItem>
+                <SelectItem value="japan">Japan</SelectItem>
+                <SelectItem value="global">Global (Worldwide)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Age Range */}
+          <div className="space-y-3">
+            <Label className="flex items-center gap-2">
+              <Users className="h-4 w-4 text-muted-foreground" />
+              Target Age Range
+            </Label>
+            <Select value={formData.ageRange} onValueChange={(value) => updateField('ageRange', value)}>
+              <SelectTrigger className="w-full transition-smooth focus:shadow-primary bg-background">
+                <SelectValue placeholder="Select age range" />
+              </SelectTrigger>
+              <SelectContent className="bg-background border shadow-elevated z-50">
+                <SelectItem value="18-24">18-24 years</SelectItem>
+                <SelectItem value="25-34">25-34 years</SelectItem>
+                <SelectItem value="35-44">35-44 years</SelectItem>
+                <SelectItem value="45-54">45-54 years</SelectItem>
+                <SelectItem value="55-64">55-64 years</SelectItem>
+                <SelectItem value="65+">65+ years</SelectItem>
+                <SelectItem value="all-ages">All Ages</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Gender */}
+          <div className="space-y-3">
+            <Label className="flex items-center gap-2">
+              <Users className="h-4 w-4 text-muted-foreground" />
+              Target Gender
+            </Label>
+            <Select value={formData.gender} onValueChange={(value) => updateField('gender', value)}>
+              <SelectTrigger className="w-full transition-smooth focus:shadow-primary bg-background">
+                <SelectValue placeholder="Select gender targeting" />
+              </SelectTrigger>
+              <SelectContent className="bg-background border shadow-elevated z-50">
+                <SelectItem value="all">All Genders</SelectItem>
+                <SelectItem value="male">Male</SelectItem>
+                <SelectItem value="female">Female</SelectItem>
+                <SelectItem value="non-binary">Non-Binary</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -137,7 +185,7 @@ export function CampaignForm({ onSubmit }: CampaignFormProps) {
             className="w-full bg-gradient-action hover-glow transition-bounce"
             disabled={!isFormValid}
           >
-            Get AI Recommendations
+            🤖 Generate AI Recommendations
           </Button>
         </form>
       </CardContent>
