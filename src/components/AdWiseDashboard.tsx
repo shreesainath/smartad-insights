@@ -47,6 +47,7 @@ export function AdWiseDashboard() {
               <Button 
                 onClick={handleReset}
                 variant="outline" 
+                size="default"
                 className="hover-glow transition-smooth"
               >
                 New Campaign

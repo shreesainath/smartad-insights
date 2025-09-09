@@ -43,7 +43,7 @@ export function CampaignForm({ onSubmit }: CampaignFormProps) {
   const isFormValid = Object.values(formData).every(value => value !== "");
 
   return (
-    <Card className="h-fit shadow-card">
+    <Card variant="elevated" className="h-fit">
       <CardHeader className="space-y-3">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-gradient-primary rounded-lg">
@@ -182,8 +182,10 @@ export function CampaignForm({ onSubmit }: CampaignFormProps) {
 
           <Button 
             type="submit" 
-            className="w-full bg-gradient-action hover-glow transition-bounce"
+            variant="action"
+            size="xl"
             disabled={!isFormValid}
+            className="w-full"
           >
             🤖 Generate AI Recommendations
           </Button>

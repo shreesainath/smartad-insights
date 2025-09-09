@@ -193,7 +193,7 @@ export function AISuggestions({ campaignData }: AISuggestionsProps) {
       </div>
 
       {/* Location Targeting */}
-      <Card className="shadow-card hover-lift">
+      <Card variant="elevated" className="hover-lift">
         <CardHeader>
           <CardTitle className="flex items-center gap-3">
             <div className="p-2 bg-primary-muted rounded-lg">
@@ -218,7 +218,7 @@ export function AISuggestions({ campaignData }: AISuggestionsProps) {
       </Card>
 
       {/* Audience Targeting */}
-      <Card className="shadow-card hover-lift">
+      <Card variant="elevated" className="hover-lift">
         <CardHeader>
           <CardTitle className="flex items-center gap-3">
             <div className="p-2 bg-success-muted rounded-lg">
@@ -235,7 +235,13 @@ export function AISuggestions({ campaignData }: AISuggestionsProps) {
             {suggestions.audience.map((filter, index) => (
               <div key={index} className="flex items-center justify-between p-3 bg-gradient-subtle rounded-lg">
                 <span className="font-medium">{filter.filter}</span>
-                <Badge className={filter.color}>
+                <Badge 
+                  variant={
+                    filter.color === "bg-primary" ? "primary" :
+                    filter.color === "bg-action" ? "action" :
+                    filter.color === "bg-success" ? "success" : "default"
+                  }
+                >
                   {filter.value}
                 </Badge>
               </div>
@@ -245,7 +251,7 @@ export function AISuggestions({ campaignData }: AISuggestionsProps) {
       </Card>
 
       {/* Creative Tips */}
-      <Card className="shadow-card hover-lift">
+      <Card variant="elevated" className="hover-lift">
         <CardHeader>
           <CardTitle className="flex items-center gap-3">
             <div className="p-2 bg-action-muted rounded-lg">
@@ -270,7 +276,7 @@ export function AISuggestions({ campaignData }: AISuggestionsProps) {
       </Card>
 
       {/* Budget Distribution */}
-      <Card className="shadow-card hover-lift">
+      <Card variant="elevated" className="hover-lift">
         <CardHeader>
           <CardTitle className="flex items-center gap-3">
             <div className="p-2 bg-primary-muted rounded-lg">
