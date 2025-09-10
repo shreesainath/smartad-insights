@@ -37,7 +37,13 @@ export function CampaignForm({ onSubmit }: CampaignFormProps) {
   };
 
   const updateField = (field: keyof CampaignData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    const newData = { ...formData, [field]: value };
+    setFormData(newData);
+    
+    // Auto-submit when form becomes valid
+    if (Object.values(newData).every(v => v !== "")) {
+      onSubmit(newData);
+    }
   };
 
   const isFormValid = Object.values(formData).every(value => value !== "");

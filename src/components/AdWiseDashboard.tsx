@@ -99,7 +99,7 @@ export function AdWiseDashboard() {
 
           {/* Right Column - AI Suggestions */}
           {showResults && campaignData && (
-            <div className="animate-slide-up">
+            <div className="animate-slide-up" key={JSON.stringify(campaignData)}>
               <AISuggestions campaignData={campaignData} />
             </div>
           )}
