@@ -175,7 +175,6 @@ export function CampaignForm({ onSubmit }: CampaignFormProps) {
                 <SelectItem value="all">All Genders</SelectItem>
                 <SelectItem value="male">Male</SelectItem>
                 <SelectItem value="female">Female</SelectItem>
-                <SelectItem value="non-binary">Non-Binary</SelectItem>
               </SelectContent>
             </Select>
           </div>
