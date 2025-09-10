@@ -1,73 +1,112 @@
-# Welcome to your Lovable project
+AI Campaign Assistant
 
-## Project info
+This project is a React + TypeScript frontend with a Flask backend for an AI-powered campaign assistant. It helps Google Ads and Meta Ads managers optimize campaigns by providing intelligent suggestions based on product, audience, and geographic data.
 
-**URL**: https://lovable.dev/projects/3e9a425e-a6d9-473d-be72-aabcc36e964e
+Features
+Frontend (React + Shadcn/UI)
 
-## How can I edit this code?
+Product-Based Campaign Suggestions
+Enter product details (e.g., baby toys, baby dresses) and get AI-driven campaign recommendations.
 
-There are several ways of editing your application.
+Audience Targeting
 
-**Use Lovable**
+Age range
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3e9a425e-a6d9-473d-be72-aabcc36e964e) and start prompting.
+Gender
 
-Changes made via Lovable will be committed automatically to this repo.
+Interests (optional)
 
-**Use your preferred IDE**
+Platform Recommendation
+Suggests the best platforms (Google Ads or Meta Ads) to run campaigns.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Location-Based Targeting
+Recommends geographic areas to run campaigns based on demographics.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Campaign Insights
 
-Follow these steps:
+Ad copy / caption suggestions
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Budget allocation
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Optimal publishing time
 
-# Step 3: Install the necessary dependencies.
-npm i
+Media Upload Support
+Upload images or videos for campaign content.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+Backend (Flask + AI)
+
+AI Training
+Uses historical campaign data to train the AI model for better campaign suggestions.
+
+Platform Optimization
+Determines which platform (Google or Meta) is likely to perform best based on product, audience, and location.
+
+API Endpoints
+Provides endpoints for:
+
+Receiving campaign details
+
+Returning AI recommendations
+
+Uploading media files
+
+Installation
+Frontend
+# Clone repository
+git clone <repo-url>
+cd frontend
+
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-```
 
-**Edit a file directly in GitHub**
+Backend
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+venv\Scripts\activate     # Windows
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+# Install dependencies
+pip install -r requirements.txt
 
-**Use GitHub Codespaces**
+# Run Flask server
+flask run
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Usage
 
-## What technologies are used for this project?
+Open the frontend in your browser (http://localhost:5173 if using Vite).
 
-This project is built with:
+Enter product, audience, and campaign details.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Upload media files for the campaign.
 
-## How can I deploy this project?
+Submit to get AI-driven campaign suggestions:
 
-Simply open [Lovable](https://lovable.dev/projects/3e9a425e-a6d9-473d-be72-aabcc36e964e) and click on Share -> Publish.
+Recommended platforms (Google or Meta)
 
-## Can I connect a custom domain to my Lovable project?
+Target locations
 
-Yes, you can!
+Ad copy and budget allocation
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Tech Stack
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Frontend: React, TypeScript, Shadcn/UI, Vite
+
+Backend: Python, Flask
+
+Database (optional): PostgreSQL or any relational database
+
+AI/ML: Python libraries (e.g., scikit-learn, pandas, PyTorch, or TensorFlow)
+
+Project Structure
+frontend/      # React frontend
+backend/       # Flask backend
+uploads/       # Uploaded media files
+
+Notes
+
+Ensure the Flask backend is running before submitting campaigns from the frontend.
+
+AI suggestions improve over time with more campaign data.
