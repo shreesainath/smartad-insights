@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Users, Lightbulb, TrendingUp, Target, Globe, Calendar, Sparkles } from "lucide-react";
+import { MapPin, Users, Lightbulb, TrendingUp, Target, Globe, Calendar, Sparkles, Monitor, Smartphone } from "lucide-react";
 
 interface CampaignData {
   productType: string;
@@ -19,12 +19,125 @@ export function AISuggestions({ campaignData }: AISuggestionsProps) {
   // Generate AI suggestions based on campaign data
   const generateSuggestions = () => {
     const suggestions = {
+      platforms: getPlatformSuggestions(),
       locations: getLocationSuggestions(),
       audience: getAudienceSuggestions(),
       creative: getCreativeSuggestions(),
       budget: getBudgetSuggestions()
     };
     return suggestions;
+  };
+
+  const getPlatformSuggestions = () => {
+    const { productType, ageRange, gender, location, campaignGoal } = campaignData;
+    
+    const platforms = [];
+    
+    // Age-based platform preferences
+    if (ageRange === '18-24' || ageRange === '25-34') {
+      platforms.push({
+        name: "Meta Ads (Facebook & Instagram)",
+        icon: "📱",
+        priority: "Primary",
+        reason: "Higher engagement rates among younger demographics",
+        allocation: "60%"
+      });
+      platforms.push({
+        name: "TikTok Ads",
+        icon: "🎵",
+        priority: "Secondary", 
+        reason: "Dominant platform for Gen Z and young millennials",
+        allocation: "25%"
+      });
+      platforms.push({
+        name: "Google Ads",
+        icon: "🔍",
+        priority: "Supporting",
+        reason: "Search intent targeting for conversions",
+        allocation: "15%"
+      });
+    } else if (ageRange === '35-44' || ageRange === '45-54') {
+      platforms.push({
+        name: "Google Ads",
+        icon: "🔍",
+        priority: "Primary",
+        reason: "Higher search volume and intent from older demographics",
+        allocation: "50%"
+      });
+      platforms.push({
+        name: "Meta Ads (Facebook)",
+        icon: "👥",
+        priority: "Secondary",
+        reason: "Strong presence of professionals and parents",
+        allocation: "35%"
+      });
+      platforms.push({
+        name: "LinkedIn Ads",
+        icon: "💼",
+        priority: "Supporting",
+        reason: "Professional targeting for B2B products",
+        allocation: "15%"
+      });
+    } else if (ageRange === '55-64' || ageRange === '65+') {
+      platforms.push({
+        name: "Google Ads",
+        icon: "🔍",
+        priority: "Primary", 
+        reason: "Preferred search behavior of older demographics",
+        allocation: "60%"
+      });
+      platforms.push({
+        name: "Meta Ads (Facebook)",
+        icon: "👥",
+        priority: "Secondary",
+        reason: "Growing usage among older adults",
+        allocation: "40%"
+      });
+    }
+    
+    // Product-specific adjustments
+    if (productType.toLowerCase().includes('saas') || productType.toLowerCase().includes('software')) {
+      // Boost LinkedIn for B2B
+      const linkedinIndex = platforms.findIndex(p => p.name.includes('LinkedIn'));
+      if (linkedinIndex !== -1) {
+        platforms[linkedinIndex].allocation = "30%";
+        platforms[linkedinIndex].priority = "Secondary";
+      } else {
+        platforms.push({
+          name: "LinkedIn Ads",
+          icon: "💼",
+          priority: "Secondary",
+          reason: "B2B software targeting professionals",
+          allocation: "30%"
+        });
+      }
+    }
+    
+    if (productType.toLowerCase().includes('fashion') || productType.toLowerCase().includes('beauty')) {
+      // Boost visual platforms
+      const metaIndex = platforms.findIndex(p => p.name.includes('Meta'));
+      if (metaIndex !== -1) {
+        platforms[metaIndex].allocation = "70%";
+        platforms[metaIndex].reason = "Visual products perform best on image-focused platforms";
+      }
+    }
+    
+    // Campaign goal adjustments
+    if (campaignGoal === 'awareness') {
+      platforms.forEach(platform => {
+        if (platform.name.includes('Meta') || platform.name.includes('TikTok')) {
+          platform.reason += " - Excellent for brand awareness campaigns";
+        }
+      });
+    } else if (campaignGoal === 'sales') {
+      platforms.forEach(platform => {
+        if (platform.name.includes('Google')) {
+          platform.reason += " - High-intent search traffic converts better";
+        }
+      });
+    }
+    
+    return platforms.slice(0, 3); // Return top 3 platforms
   };
 
   const getLocationSuggestions = () => {
@@ -191,6 +304,51 @@ export function AISuggestions({ campaignData }: AISuggestionsProps) {
           🤖 Optimized AI suggestions for your {campaignData.productType} campaign targeting {campaignData.location} audience
         </p>
       </div>
+
+      {/* Platform Recommendations */}
+      <Card variant="elevated" className="hover-lift">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-3">
+            <div className="p-2 bg-action-muted rounded-lg">
+              <Monitor className="h-5 w-5 text-action" />
+            </div>
+            Recommended Advertising Platforms
+          </CardTitle>
+          <CardDescription>
+            🎯 AI-selected platforms optimized for your audience and goals
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {suggestions.platforms.map((platform, index) => (
+              <div key={index} className="flex items-center justify-between p-4 bg-gradient-subtle rounded-lg border">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">{platform.icon}</span>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h4 className="font-semibold">{platform.name}</h4>
+                      <Badge 
+                        variant={
+                          platform.priority === "Primary" ? "primary" :
+                          platform.priority === "Secondary" ? "action" : "secondary"
+                        }
+                        className="text-xs"
+                      >
+                        {platform.priority}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-1">{platform.reason}</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-lg font-bold text-primary">{platform.allocation}</div>
+                  <div className="text-xs text-muted-foreground">Budget</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Location Targeting */}
       <Card variant="elevated" className="hover-lift">
