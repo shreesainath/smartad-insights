@@ -1,112 +1,102 @@
-AI Campaign Assistant
+# AI Campaign Assistant
 
-This project is a React + TypeScript frontend with a Flask backend for an AI-powered campaign assistant. It helps Google Ads and Meta Ads managers optimize campaigns by providing intelligent suggestions based on product, audience, and geographic data.
+An AI-powered campaign assistant with a React + TypeScript frontend and Flask backend to help Google Ads and Meta Ads managers optimize campaigns through intelligent, data-driven suggestions.
 
-Features
-Frontend (React + Shadcn/UI)
+---
 
-Product-Based Campaign Suggestions
-Enter product details (e.g., baby toys, baby dresses) and get AI-driven campaign recommendations.
+## Features
 
-Audience Targeting
+### Frontend (React + TypeScript + Shadcn/UI)
 
-Age range
+- Product-based campaign suggestions based on entered product details (e.g., baby toys, baby dresses)
+- Audience targeting by age, gender, and optional interests
+- Platform recommendation: Suggests the best platform (Google Ads or Meta Ads) to run campaigns
+- Geo-targeting: Recommends optimal locations based on demographics
+- Campaign insights including ad copy/caption suggestions, budget allocation, and ideal publishing time
+- Media upload support for images and videos as campaign content
 
-Gender
+### Backend (Flask + AI)
 
-Interests (optional)
+- AI training on historical campaign data to improve suggestion accuracy
+- Platform optimization to predict campaign performance on Google or Meta
+- REST API endpoints to receive campaign details, return AI recommendations, and upload media
 
-Platform Recommendation
-Suggests the best platforms (Google Ads or Meta Ads) to run campaigns.
+---
 
-Location-Based Targeting
-Recommends geographic areas to run campaigns based on demographics.
+## Installation
 
-Campaign Insights
+### Frontend
 
-Ad copy / caption suggestions
-
-Budget allocation
-
-Optimal publishing time
-
-Media Upload Support
-Upload images or videos for campaign content.
-
-Backend (Flask + AI)
-
-AI Training
-Uses historical campaign data to train the AI model for better campaign suggestions.
-
-Platform Optimization
-Determines which platform (Google or Meta) is likely to perform best based on product, audience, and location.
-
-API Endpoints
-Provides endpoints for:
-
-Receiving campaign details
-
-Returning AI recommendations
-
-Uploading media files
-
-Installation
-Frontend
-# Clone repository
+Clone repo and enter frontend directory
 git clone <repo-url>
 cd frontend
 
-# Install dependencies
+Install dependencies
 npm install
 
-# Run development server
+Run development server
 npm run dev
 
-Backend
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-venv\Scripts\activate     # Windows
+text
 
-# Install dependencies
+### Backend
+
+Create and activate Python virtual environment
+python -m venv venv
+source venv/bin/activate # Linux/Mac
+venv\Scripts\activate # Windows
+
+Install dependencies
 pip install -r requirements.txt
 
-# Run Flask server
+Run Flask server
 flask run
 
-Usage
+text
 
-Open the frontend in your browser (http://localhost:5173 if using Vite).
+---
 
-Enter product, audience, and campaign details.
+## Usage
 
-Upload media files for the campaign.
+1. Open the frontend in your browser (default: `http://localhost:5173`).
+2. Enter product, audience, and campaign details.
+3. Upload media files for the campaign if desired.
+4. Submit the form to receive AI-driven recommendations:
+   - Suggested platforms (Google or Meta)
+   - Recommended target locations
+   - Ad copy, budget allocation, and publishing time
 
-Submit to get AI-driven campaign suggestions:
+---
 
-Recommended platforms (Google or Meta)
+## Tech Stack
 
-Target locations
+- Frontend: React, TypeScript, Shadcn/UI, Vite
+- Backend: Python, Flask
+- AI/ML: Python libraries (scikit-learn, pandas, PyTorch or TensorFlow)
+- Database (optional): PostgreSQL or any relational database
 
-Ad copy and budget allocation
+---
 
-Tech Stack
+## Project Structure
 
-Frontend: React, TypeScript, Shadcn/UI, Vite
+frontend/ # React + TypeScript frontend source code
+backend/ # Flask backend API and AI model
+uploads/ # Uploaded media files storage
 
-Backend: Python, Flask
+text
 
-Database (optional): PostgreSQL or any relational database
+---
 
-AI/ML: Python libraries (e.g., scikit-learn, pandas, PyTorch, or TensorFlow)
+## Notes
 
-Project Structure
-frontend/      # React frontend
-backend/       # Flask backend
-uploads/       # Uploaded media files
+- Ensure the Flask backend is running before submitting campaigns from the frontend.
+- AI recommendations will improve with more campaign data and training over time.
 
-Notes
+---
 
-Ensure the Flask backend is running before submitting campaigns from the frontend.
+## Contributing
 
-AI suggestions improve over time with more campaign data.
+Contributions, issues, and feature requests are welcome!  
+Feel free to check issues or submit pull requests.
+
+---
