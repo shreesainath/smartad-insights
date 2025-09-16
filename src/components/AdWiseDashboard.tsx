@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CampaignForm } from "./CampaignForm";
-import { AISuggestions } from "./AISuggestions";
+import AISuggestions from "./AISuggestions";
 import { Button } from "@/components/ui/button";
 import { Zap, BarChart3, Target } from "lucide-react";
 
