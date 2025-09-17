@@ -54,25 +54,23 @@ export function CampaignForm({ onRecommendations, onLoadingChange }: CampaignFor
         }
       };
 
-      console.log('🚀 Sending campaign data:', campaignData);
+      
       const response = await apiService.getCampaignRecommendations(campaignData);
       
-      console.log('📥 Full API response:', response);
-      console.log('📊 Response.data:', response.data);
       
       if (response.success && response.data) {
-        console.log('✅ About to call onRecommendations with:', response.data);
+       
         onRecommendations(response.data);
         toast({
           title: "Success! 🎉",
           description: "AI recommendations generated successfully",
         });
       } else {
-        console.error('❌ API response missing data:', response);
+        
         throw new Error(response.error || 'Failed to get recommendations');
       }
     } catch (error) {
-      console.error('❌ Error getting recommendations:', error);
+     
       toast({
         title: "Error",
         description: error instanceof Error ? error.message : "Failed to get recommendations",
