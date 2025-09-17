@@ -1,0 +1,89 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  # React Frontend Dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Kolkata"
+    target-branch: "main"
+    open-pull-requests-limit: 10
+    
+    # Group related updates together
+    groups:
+      react-ecosystem:
+        patterns:
+          - "react*"
+          - "@types/react*"
+      ui-components:
+        patterns:
+          - "@radix-ui/*"
+          - "lucide-react"
+          - "class-variance-authority"
+          - "tailwindcss"
+      dev-dependencies:
+        patterns:
+          - "@typescript-eslint/*"
+          - "eslint*"
+          - "vite*"
+          - "typescript"
+    
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+    
+    reviewers:
+      - "shreesainath"
+    
+    labels:
+      - "dependencies"
+      - "frontend"
+      - "automated"
+
+  # Python Backend Dependencies  
+  - package-ecosystem: "pip"
+    directory: "/smartad-backend"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "09:00"
+      timezone: "Asia/Kolkata"
+    target-branch: "main"
+    open-pull-requests-limit: 5
+    
+    groups:
+      flask-ecosystem:
+        patterns:
+          - "flask*"
+          - "Flask*"
+      ml-packages:
+        patterns:
+          - "scikit-learn"
+          - "pandas"
+          - "numpy"
+          - "joblib"
+      security-packages:
+        patterns:
+          - "cryptography"
+          - "jwt"
+          - "werkzeug"
+    
+    commit-message:
+      prefix: "deps(backend)"
+      include: "scope"
+      
+    reviewers:
+      - "shreesainath"
+    
+    labels:
+      - "dependencies"
+      - "backend" 
+      - "python"
+      - "automated"
