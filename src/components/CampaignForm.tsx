@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Target, DollarSign, Zap, Users, Loader2 } from "lucide-react";
 import { apiService } from "@/services/api";
@@ -55,19 +54,25 @@ export function CampaignForm({ onRecommendations, onLoadingChange }: CampaignFor
         }
       };
 
+      console.log('🚀 Sending campaign data:', campaignData);
       const response = await apiService.getCampaignRecommendations(campaignData);
       
+      console.log('📥 Full API response:', response);
+      console.log('📊 Response.data:', response.data);
+      
       if (response.success && response.data) {
+        console.log('✅ About to call onRecommendations with:', response.data);
         onRecommendations(response.data);
         toast({
           title: "Success! 🎉",
           description: "AI recommendations generated successfully",
         });
       } else {
+        console.error('❌ API response missing data:', response);
         throw new Error(response.error || 'Failed to get recommendations');
       }
     } catch (error) {
-      console.error('Error getting recommendations:', error);
+      console.error('❌ Error getting recommendations:', error);
       toast({
         title: "Error",
         description: error instanceof Error ? error.message : "Failed to get recommendations",
@@ -106,9 +111,9 @@ export function CampaignForm({ onRecommendations, onLoadingChange }: CampaignFor
             <Target className="h-5 w-5 text-blue-600" />
           </div>
           <div>
-            <CardTitle className="text-xl">Campaign Details</CardTitle>
+            <CardTitle className="text-xl">Tamil Nadu Campaign Details</CardTitle>
             <CardDescription>
-              Tell us about your campaign to get AI-powered recommendations
+              Tell us about your Tamil Nadu campaign to get AI-powered recommendations
             </CardDescription>
           </div>
         </div>
@@ -124,7 +129,7 @@ export function CampaignForm({ onRecommendations, onLoadingChange }: CampaignFor
             </Label>
             <Input
               id="productName"
-              placeholder="e.g., Wireless Headphones, CRM Software, Fitness App"
+              placeholder="e.g., Software Development, Textile Manufacturing, IT Services"
               value={formData.product_name}
               onChange={(e) => updateField('product_name', e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -138,41 +143,49 @@ export function CampaignForm({ onRecommendations, onLoadingChange }: CampaignFor
               <DollarSign className="h-4 w-4 text-gray-500" />
               Monthly Budget *
             </Label>
-            <Select value={formData.budget} onValueChange={(value) => updateField('budget', value)}>
-              <SelectTrigger className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <SelectValue placeholder="Select budget range" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 rounded-md shadow-lg z-50 max-h-60 overflow-auto">
-                <SelectItem value="500-1000" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">$500 - $1,000</SelectItem>
-                <SelectItem value="1000-2500" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">$1,000 - $2,500</SelectItem>
-                <SelectItem value="2500-5000" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">$2,500 - $5,000</SelectItem>
-                <SelectItem value="5000-10000" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">$5,000 - $10,000</SelectItem>
-                <SelectItem value="10000+" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">$10,000+</SelectItem>
-              </SelectContent>
-            </Select>
+            <select
+              value={formData.budget}
+              onChange={(e) => updateField('budget', e.target.value)}
+              className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none cursor-pointer"
+              required
+            >
+              <option value="">Select budget range</option>
+              <option value="500-1000">$500 - $1,000</option>
+              <option value="1000-2500">$1,000 - $2,500</option>
+              <option value="2500-5000">$2,500 - $5,000</option>
+              <option value="5000-10000">$5,000 - $10,000</option>
+              <option value="10000+">$10,000+</option>
+            </select>
           </div>
 
-          {/* Location */}
+          {/* Location - UPDATED TO TAMIL NADU DISTRICTS */}
           <div className="space-y-3">
             <Label className="flex items-center gap-2">
               <Target className="h-4 w-4 text-gray-500" />
-              Target Location *
+              Tamil Nadu District *
             </Label>
-            <Select value={formData.location} onValueChange={(value) => updateField('location', value)}>
-              <SelectTrigger className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <SelectValue placeholder="Select target location" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 rounded-md shadow-lg z-50 max-h-60 overflow-auto">
-                <SelectItem value="United States" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">United States</SelectItem>
-                <SelectItem value="Canada" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">Canada</SelectItem>
-                <SelectItem value="United Kingdom" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">United Kingdom</SelectItem>
-                <SelectItem value="Australia" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">Australia</SelectItem>
-                <SelectItem value="Germany" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">Germany</SelectItem>
-                <SelectItem value="France" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">France</SelectItem>
-                <SelectItem value="Japan" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">Japan</SelectItem>
-                <SelectItem value="Global" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">Global (Worldwide)</SelectItem>
-              </SelectContent>
-            </Select>
+            <select
+              value={formData.location}
+              onChange={(e) => updateField('location', e.target.value)}
+              className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none cursor-pointer"
+              required
+            >
+              <option value="">Select Tamil Nadu district</option>
+              <option value="Chennai">Chennai (Metro)</option>
+              <option value="Coimbatore">Coimbatore (Industrial Hub)</option>
+              <option value="Salem">Salem (Steel City)</option>
+              <option value="Vellore">Vellore (Medical Hub)</option>
+              <option value="Thiruvallur">Thiruvallur (Industrial)</option>
+              <option value="Kancheepuram">Kancheepuram (Silk City)</option>
+              <option value="Chengalpattu">Chengalpattu (IT Corridor)</option>
+              <option value="Tiruppur">Tiruppur (Textile Capital)</option>
+              <option value="Erode">Erode (Textile Hub)</option>
+              <option value="Namakkal">Namakkal (Poultry Hub)</option>
+              <option value="Dharmapuri">Dharmapuri (Steel & Mining)</option>
+              <option value="Krishnagiri">Krishnagiri (Mango & Granite)</option>
+              <option value="Ranipet">Ranipet (Leather & Engineering)</option>
+              <option value="Tirupathur">Tirupathur (Silk & Handicrafts)</option>
+            </select>
           </div>
 
           {/* Age Range */}
@@ -181,20 +194,19 @@ export function CampaignForm({ onRecommendations, onLoadingChange }: CampaignFor
               <Users className="h-4 w-4 text-gray-500" />
               Target Age Range *
             </Label>
-            <Select value={formData.target_audience.age_group} onValueChange={(value) => updateField('target_audience.age_group', value)}>
-              <SelectTrigger className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <SelectValue placeholder="Select age range" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 rounded-md shadow-lg z-50 max-h-60 overflow-auto">
-                <SelectItem value="18-24" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">18-24 years</SelectItem>
-                <SelectItem value="25-34" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">25-34 years</SelectItem>
-                <SelectItem value="35-44" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">35-44 years</SelectItem>
-                <SelectItem value="45-54" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">45-54 years</SelectItem>
-                <SelectItem value="55-64" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">55-64 years</SelectItem>
-                <SelectItem value="65+" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">65+ years</SelectItem>
-                <SelectItem value="all-ages" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">All Ages</SelectItem>
-              </SelectContent>
-            </Select>
+            <select
+              value={formData.target_audience.age_group}
+              onChange={(e) => updateField('target_audience.age_group', e.target.value)}
+              className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none cursor-pointer"
+              required
+            >
+              <option value="">Select age range</option>
+              <option value="18-24">18-24 years</option>
+              <option value="25-34">25-34 years</option>
+              <option value="35-44">35-44 years</option>
+              <option value="45-54">45-54 years</option>
+              <option value="55-64">55-64 years</option>
+            </select>
           </div>
 
           {/* Interests */}
@@ -205,7 +217,7 @@ export function CampaignForm({ onRecommendations, onLoadingChange }: CampaignFor
             </Label>
             <Input
               id="interests"
-              placeholder="e.g., technology, fitness, cooking, travel"
+              placeholder="e.g., technology, manufacturing, textiles, agriculture"
               value={formData.target_audience.interests}
               onChange={(e) => updateField('target_audience.interests', e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -221,18 +233,18 @@ export function CampaignForm({ onRecommendations, onLoadingChange }: CampaignFor
               <Zap className="h-4 w-4 text-gray-500" />
               Primary Campaign Goal
             </Label>
-            <Select value={formData.objectives[0]} onValueChange={(value) => updateField('objectives', value)}>
-              <SelectTrigger className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <SelectValue placeholder="Select your primary goal" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 rounded-md shadow-lg z-50 max-h-60 overflow-auto">
-                <SelectItem value="awareness" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">Brand Awareness</SelectItem>
-                <SelectItem value="traffic" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">Drive Website Traffic</SelectItem>
-                <SelectItem value="leads" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">Generate Leads</SelectItem>
-                <SelectItem value="conversions" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">Increase Sales</SelectItem>
-                <SelectItem value="engagement" className="px-3 py-2 hover:bg-gray-100 cursor-pointer">Social Engagement</SelectItem>
-              </SelectContent>
-            </Select>
+            <select
+              value={formData.objectives[0]}
+              onChange={(e) => updateField('objectives', e.target.value)}
+              className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none cursor-pointer"
+            >
+              <option value="">Select your primary goal</option>
+              <option value="awareness">Brand Awareness</option>
+              <option value="traffic">Drive Website Traffic</option>
+              <option value="leads">Generate Leads</option>
+              <option value="conversions">Increase Sales</option>
+              <option value="engagement">Social Engagement</option>
+            </select>
           </div>
 
           <Button 
@@ -246,7 +258,7 @@ export function CampaignForm({ onRecommendations, onLoadingChange }: CampaignFor
                 Generating AI Recommendations...
               </>
             ) : (
-              "🤖 Generate AI Recommendations"
+              "🤖 Generate Tamil Nadu AI Recommendations"
             )}
           </Button>
         </form>

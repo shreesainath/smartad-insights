@@ -58,17 +58,40 @@ class ApiService {
     return this.request('/health');
   }
 
+  // AI Model health check
+  async checkAIHealth() {
+    try {
+      console.log('🏥 Checking AI Model Health...');
+      const response = await this.request('/campaign/health');
+      console.log('🤖 AI Health Status:', response);
+      return response;
+    } catch (error) {
+      console.error('❌ AI Health Check Error:', error);
+      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+    }
+  }
+
   // Get platforms
   async getPlatforms() {
     return this.request('/platforms');
   }
 
-  // Get campaign recommendations
+  // Get campaign recommendations using AI model
   async getCampaignRecommendations(campaignData: CampaignData) {
-    return this.request('/campaign/recommendations', {
-      method: 'POST',
-      body: JSON.stringify(campaignData),
-    });
+    try {
+      console.log('🚀 Sending campaign data to AI model:', campaignData);
+      
+      const response = await this.request('/campaign/recommendations', {
+        method: 'POST',
+        body: JSON.stringify(campaignData),
+      });
+
+      console.log('🤖 AI Recommendations received:', response);
+      return response;
+    } catch (error) {
+      console.error('❌ Campaign Recommendations Error:', error);
+      throw error;
+    }
   }
 
   // User authentication

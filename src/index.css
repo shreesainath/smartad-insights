@@ -61,19 +61,12 @@ All colors MUST be HSL for consistency */
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -205,4 +198,43 @@ All colors MUST be HSL for consistency */
   .hover-glow {
     @apply transition-smooth hover:shadow-primary;
   }
+}
+
+/* Fix for shadcn/ui Select dropdown z-index issues */
+[data-radix-select-content] {
+  z-index: 9999 !important;
+  position: fixed !important;
+}
+
+[data-radix-popper-content-wrapper] {
+  z-index: 9999 !important;
+}
+
+/* Additional Radix UI fixes for dropdowns */
+[data-radix-select-viewport] {
+  position: relative;
+}
+
+/* Ensure proper dropdown styling for shadcn/ui */
+[data-radix-select-content] {
+  background: white;
+  border: 1px solid hsl(var(--border));
+  border-radius: calc(var(--radius) - 2px);
+  box-shadow: var(--shadow-elevated);
+  padding: 4px;
+}
+
+[data-radix-select-item] {
+  border-radius: calc(var(--radius) - 4px);
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+[data-radix-select-item]:hover {
+  background: hsl(var(--accent));
+}
+
+[data-radix-select-item][data-state="checked"] {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
 }
